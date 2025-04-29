@@ -1,7 +1,13 @@
 namespace ClassHelperExamples;
 
-public class Student // kişi
+public class Person // kişi
 {
+    // private sadece kendi class'ı içinde erişim
+    // protected private gibi ama interit edilebilir
+    protected int GenerateId() 
+    {
+        return 1;
+    }
     public string FirstName { get; set; } // ad
     public string LastName { get; set; } // soyad
     public DateOnly BirthDate { get; set; } // yaş
@@ -22,6 +28,21 @@ public class Student // kişi
         }
 
         return age;
+    }
+
+    public Person()
+    {
+        GenerateId();
+    }
+}
+
+public class Student : Person
+{
+    public string ClassName { get; set; }
+
+    public Student()
+    {
+        GenerateId();
     }
 }
 

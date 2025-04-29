@@ -1,15 +1,7 @@
 ﻿using ClassHelperExamples;
 using ClassHelperExamples.Helpers;
 
-var me = new Student
-{
-    FirstName = "Orhan",
-    LastName = "Ekici",
-    BirthDate = new DateOnly(1989, 3, 17),
-    Gender = "Erkek"
-};
-
-var students = new List<Student> { me };
+var students = StudentHelper.LoadFromTxt();
 
 while (true)
 {
@@ -23,6 +15,7 @@ while (true)
         StudentHelper.ListStudents(students);
     } else if (inputSelection == 2)
     {
+        StudentHelper.AddNewStudent(students);
         // buraya sihirli kodlar yaz ve diğer else if'leri de yap
     }
     else
@@ -36,6 +29,4 @@ while (true)
     Console.WriteLine("\nMenüye dönmek için bir tuşa basın.");
     Console.ReadKey(true);
 }
-
-
 

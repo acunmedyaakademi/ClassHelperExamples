@@ -87,6 +87,11 @@ public static class Helper
         ShowColoredMsg(msg, ConsoleColor.Red);
     }
 
+    public static void ShowInfoMsg(string msg)
+    {
+        ShowColoredMsg(msg, ConsoleColor.Yellow);
+    }
+
     private static string ReadSecretLine()
     {
         var line = "";
@@ -130,4 +135,6 @@ public static class Helper
     {
         return char.IsLetterOrDigit(c) || char.IsPunctuation(c) || char.IsSymbol(c) || char.IsWhiteSpace(c);
     }
+
+    
 }
