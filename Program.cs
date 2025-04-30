@@ -1,7 +1,15 @@
 ﻿using ClassHelperExamples;
 using ClassHelperExamples.Helpers;
 
-var students = StudentHelper.LoadFromTxt();
+// Oracle -> çok zengin şirketiz
+// MSSQL -> MSSQL Developer Edition SSMS (Sql Server Management Studio)
+// MySQL -> Open Source alt MariaDB
+// PostgreSQL -> Open Source
+// SQLite -> basit şeylerde veya okuma ağırlıklı projelerde kullanmak daha mantıklı
+
+// Thread blocking ve non-blocking -> async 
+
+var students = await StudentHelper.LoadFromTxt();
 
 while (true)
 {

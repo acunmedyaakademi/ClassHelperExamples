@@ -24,33 +24,42 @@ public static class StudentHelper
     {
         Console.Clear();
         Console.WriteLine("ÖĞRENCİ EKLE \n");
-        
-        students.Add(new Student
+
+        var newStudent = new Student
         {
             FirstName = Helper.Ask("Ad", true),
             LastName = Helper.Ask("Soyad", true),
             BirthDate = DateOnly.ParseExact(Helper.Ask("Doğum Tarihi (gg.aa.yyyy)", true), "dd.MM.yyyy"),
             Gender = Helper.Ask("Cinsiyet", true),
-        });
+        };
         
-        SaveToTxt(students);
+        students.Add(newStudent);
+        
+        SaveStudentToTxt(newStudent);
         
         Helper.ShowSuccessMsg("Öğrenci eklendi!");
     }
-    
-    public static void SaveToTxt(List<Student> students)
+
+    private static async Task SaveStudentToTxt(Student student)
     {
-        using (var writer = new StreamWriter("students.txt"))
+        await using var writer = new StreamWriter("students.txt", true);
+        await writer.WriteLineAsync($"{student.FirstName};{student.LastName};{student.BirthDate.ToString()};{student.Gender}");
+        writer.Close();
+    }
+
+    private static async Task SaveToTxt(List<Student> students)
+    {
+        await using (var writer = new StreamWriter("students.txt"))
         {
             foreach (var student in students)
             {
-                writer.WriteLine($"{student.FirstName};{student.LastName};{student.BirthDate.ToString()};{student.Gender}");
+                await writer.WriteLineAsync($"{student.FirstName};{student.LastName};{student.BirthDate.ToString()};{student.Gender}");
             }
             writer.Close();
         }
     }
 
-    public static List<Student> LoadFromTxt()
+    public static async Task<List<Student>> LoadFromTxt()
     {
         var students = new List<Student>();
         
@@ -58,8 +67,8 @@ public static class StudentHelper
         try
         {
             using var reader = new StreamReader("students.txt");
-            var lines = reader.ReadToEnd().Split("\n");
-            foreach (var line in lines)
+            var lines = await reader.ReadToEndAsync(); // methodları üst üste yazmaya chaining denir async de farklı yöntemler denemeliyiz.
+            foreach (var line in lines.Split("\n"))
             {
                 // eğer satırımız boş ise bir sonraki iterasyona geç
                 if (string.IsNullOrEmpty(line))
